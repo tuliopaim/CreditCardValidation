@@ -1,6 +1,5 @@
 ﻿using CreditCardValidation.Domain.Contracts;
 using CreditCardValidation.Domain.Entities;
-using CreditCardValidation.Infrastructure.Notifier;
 using MediatR;
 
 namespace CreditCardValidation.Commands.SaveCreditCardCommand;
@@ -9,16 +8,19 @@ public class SaveCreditCardCommandHandler : IRequestHandler<SaveCreditCardComman
 {
     private readonly ICustomerRepository _customerRepository;
     private readonly ICreditCardRepository _creditCardRepository;
+    private readonly IDateTimeProvider _dateTimeProvider;
     private readonly INotifier _notifier;
 
     public SaveCreditCardCommandHandler(
         ICustomerRepository customerRepository,
         ICreditCardRepository creditCardRepository,
-        INotifier notifier)
+        INotifier notifier,
+        IDateTimeProvider dateTimeProvider)
     {
         _customerRepository = customerRepository;
         _creditCardRepository = creditCardRepository;
         _notifier = notifier;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     public async Task<SaveCreditCardCommandResponse> Handle(SaveCreditCardCommandInput request, CancellationToken cancellationToken)
@@ -29,13 +31,13 @@ public class SaveCreditCardCommandHandler : IRequestHandler<SaveCreditCardComman
             return new();
         }
 
-        var registeredAt = DateTime.UtcNow;
-        var creditCard = new CreditCard(request.CustomerId, request.CVV, request.CardNumber, registeredAt);
+        var registeredAt = _dateTimeProvider.UtcNow;
+        var creditCard = new CreditCard(request.CustomerId, request.CardNumber, registeredAt);
 
         _creditCardRepository.Add(creditCard);
         await _creditCardRepository.SaveChanges(cancellationToken);
 
-        var token = creditCard.CreateToken();
+        var token = creditCard.CreateToken(request.CVV);
 
         return new SaveCreditCardCommandResponse
         {

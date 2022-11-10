@@ -1,6 +1,5 @@
-using CreditCardValidation.Core;
 using CreditCardValidation.Domain.Contracts;
-using CreditCardValidation.Infrastructure.Notifier;
+using CreditCardValidation.Infrastructure.Core;
 using CreditCardValidation.Infrastructure.Repositories;
 using FluentValidation;
 using MediatR;
@@ -13,14 +12,18 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services
+    .AddSingleton<IDateTimeProvider, DateTimeProvider>();
+
+builder.Services
     .AddScoped<INotifier, Notifier>()
     .AddScoped<ICreditCardRepository, CreditCardRepository>()
     .AddScoped<ICustomerRepository, CustomerRepository>();
 
+var currentAssembly =  Assembly.GetExecutingAssembly();
 builder.Services
-   .AddMediatR(config => config.AsScoped(), Assembly.GetExecutingAssembly())
+   .AddMediatR(config => config.AsScoped(), currentAssembly)
    .AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>))
-   .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+   .AddValidatorsFromAssembly(currentAssembly);
 
 var app = builder.Build();
 
