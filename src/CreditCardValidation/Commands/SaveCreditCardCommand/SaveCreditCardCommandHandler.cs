@@ -1,4 +1,5 @@
-﻿using CreditCardValidation.Domain.Contracts;
+﻿using CreditCardValidation.Core.Contracts;
+using CreditCardValidation.Domain.Contracts;
 using CreditCardValidation.Domain.Entities;
 using MediatR;
 

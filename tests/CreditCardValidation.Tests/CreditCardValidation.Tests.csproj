@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CreditCardValidation\CreditCardValidation.csproj" />
+    <ProjectReference Include="..\..\src\CreditCardValidation\CreditCardValidation.csproj" />
   </ItemGroup>
 
 </Project>

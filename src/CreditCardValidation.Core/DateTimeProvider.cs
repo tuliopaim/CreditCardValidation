@@ -1,6 +1,6 @@
-﻿using CreditCardValidation.Domain.Contracts;
+﻿using CreditCardValidation.Core.Contracts;
 
-namespace CreditCardValidation.Infrastructure.Core;
+namespace CreditCardValidation.Core;
 
 public class DateTimeProvider : IDateTimeProvider
 {

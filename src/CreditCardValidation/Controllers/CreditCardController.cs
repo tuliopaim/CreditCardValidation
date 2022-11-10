@@ -1,7 +1,7 @@
 using CreditCardValidation.Commands;
 using CreditCardValidation.Commands.SaveCreditCardCommand;
 using CreditCardValidation.Commands.ValidateTokenCommand;
-using CreditCardValidation.Domain.Contracts;
+using CreditCardValidation.Core.Contracts;
 using CreditCardValidation.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

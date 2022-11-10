@@ -1,9 +1,10 @@
 ﻿using FluentValidation.Results;
 using FluentValidation;
 using MediatR;
-using CreditCardValidation.Domain.Contracts;
+using Microsoft.Extensions.Logging;
+using CreditCardValidation.Core.Contracts;
 
-namespace CreditCardValidation.Infrastructure.Core;
+namespace CreditCardValidation.Core;
 
 public class ValidationPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>

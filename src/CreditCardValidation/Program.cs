@@ -1,6 +1,7 @@
+using CreditCardValidation.Core;
+using CreditCardValidation.Core.Contracts;
 using CreditCardValidation.Domain.Contracts;
 using CreditCardValidation.Infrastructure;
-using CreditCardValidation.Infrastructure.Core;
 using CreditCardValidation.Infrastructure.Repositories;
 using FluentValidation;
 using MediatR;

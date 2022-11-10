@@ -1,4 +1,4 @@
-﻿namespace CreditCardValidation.Domain.Contracts;
+﻿namespace CreditCardValidation.Core.Contracts;
 
 public interface IDateTimeProvider
 {
