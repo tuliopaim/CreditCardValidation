@@ -1,22 +1,31 @@
 ﻿using CreditCardValidation.Domain.Contracts;
 using CreditCardValidation.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CreditCardValidation.Infrastructure.Repositories;
 
 public class CustomerRepository : ICustomerRepository
 {
+    private readonly CreditCardDbContext _creditCardDbContext;
+
+    public CustomerRepository(CreditCardDbContext creditCardDbContext)
+    {
+        _creditCardDbContext = creditCardDbContext;
+    }
+
     public void Add(Customer customer)
     {
-        throw new NotImplementedException();
+        _creditCardDbContext.Customers.Add(customer);
     }
 
     public Task<bool> CustomerExists(int customerId)
     {
-        throw new NotImplementedException();
+        var customers = _creditCardDbContext.Customers.ToList();
+        return _creditCardDbContext.Customers.AnyAsync(x => x.CustomerId == customerId);
     }
 
     public Task SaveChanges(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return _creditCardDbContext.SaveChangesAsync(cancellationToken);
     }
 }

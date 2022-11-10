@@ -11,6 +11,8 @@ public class Customer
         Name = name;
     }
 
-    public int CustomerId { get; set; }
-    public string Name { get; set; } = "";
+    public int CustomerId { get; private set; }
+    public string Name { get; private set; } = "";
+
+    public List<CreditCard> CreditCards { get; private set; } = new();
 }

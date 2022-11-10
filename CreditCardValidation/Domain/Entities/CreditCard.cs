@@ -21,6 +21,8 @@ public class CreditCard
     public long Number { get; private set; }
     public DateTime TokenRegisteredAt { get; private set; }
 
+    public virtual Customer Customer { get; set; }
+
     public long CreateToken(int cvv)
     {
         int[] digits = LastFourDigitsOfNumber();
