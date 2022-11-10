@@ -19,7 +19,7 @@ public class CreditCard
     public long Number { get; private set; }
     public DateTime TokenCreatedAt { get; private set; }
 
-    public virtual Customer Customer { get; set; }
+    public virtual Customer Customer { get; private set; }
 
     public long CreateToken(int cvv, DateTime tokenCreatedAt)
     {

@@ -16,19 +16,20 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<CreditCardDbContext>(opt => opt.UseInMemoryDatabase("CreditCardDB"));
 
-builder.Services
-    .AddSingleton<IDateTimeProvider, DateTimeProvider>();
-
-builder.Services
-    .AddScoped<INotifier, Notifier>()
-    .AddScoped<ICreditCardRepository, CreditCardRepository>()
-    .AddScoped<ICustomerRepository, CustomerRepository>();
-
 var currentAssembly =  Assembly.GetExecutingAssembly();
+
 builder.Services
    .AddMediatR(config => config.AsScoped(), currentAssembly)
    .AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>))
    .AddValidatorsFromAssembly(currentAssembly);
+
+ValidatorOptions.Global.LanguageManager.Enabled = false;
+
+builder.Services
+    .AddSingleton<IDateTimeProvider, DateTimeProvider>()
+    .AddScoped<INotifier, Notifier>()
+    .AddScoped<ICreditCardRepository, CreditCardRepository>()
+    .AddScoped<ICustomerRepository, CustomerRepository>();
 
 var app = builder.Build();
 
