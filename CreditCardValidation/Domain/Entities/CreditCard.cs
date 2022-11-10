@@ -8,22 +8,27 @@ public class CreditCard
 
     public CreditCard(
         int customerId,
-        long number,
-        DateTime registredAt)
+        long number)
     {
         CustomerId = customerId;
         Number = number;
-        TokenRegisteredAt = registredAt;
     }
 
     public int CardId { get; private set; }
     public int CustomerId { get; private set; }
     public long Number { get; private set; }
-    public DateTime TokenRegisteredAt { get; private set; }
+    public DateTime TokenCreatedAt { get; private set; }
 
     public virtual Customer Customer { get; set; }
 
-    public long CreateToken(int cvv)
+    public long CreateToken(int cvv, DateTime tokenCreatedAt)
+    {
+        TokenCreatedAt = tokenCreatedAt;
+
+        return CreateToken(cvv);
+    }
+
+    private long CreateToken(int cvv)
     {
         int[] digits = LastFourDigitsOfNumber();
 
@@ -34,18 +39,20 @@ public class CreditCard
             (digits[0],
              digits[1],
              digits[2],
-             digits[3]) 
-             = 
+             digits[3])
+             =
              (digits[3],
              digits[0],
              digits[1],
              digits[2]);
         }
 
-        return long.Parse(string.Concat(digits));
+        var token = long.Parse(string.Concat(digits));
+
+        return token;
     }
 
-    public int[] LastFourDigitsOfNumber()
+    private int[] LastFourDigitsOfNumber()
     {
         var numberStr = Number.ToString();
         var lastFourIndex = numberStr.Length - 4;

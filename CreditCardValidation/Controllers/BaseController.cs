@@ -13,7 +13,7 @@ public abstract class BaseController : Controller
         _notifier = notifier;
     }
 
-    protected IActionResult HandleResult<T>(T result)
+    protected IActionResult HandleResponse<T>(T result)
     {
         if (!_notifier.IsValid) return ErrorsBadRequest();
 

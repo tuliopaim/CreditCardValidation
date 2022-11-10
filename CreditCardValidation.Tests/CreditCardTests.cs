@@ -16,12 +16,9 @@ public class CreditCardTests
         long creditCardNumber,
         long expectedToken)
     {
-        var creditCard = new CreditCard(
-            45,
-            creditCardNumber,
-            DateTime.UtcNow);
+        var creditCard = new CreditCard(45, creditCardNumber);
 
-        var token = creditCard.CreateToken(cvv);
+        var token = creditCard.CreateToken(cvv, DateTime.UtcNow);
 
         Assert.Equal(expectedToken, token);
     }

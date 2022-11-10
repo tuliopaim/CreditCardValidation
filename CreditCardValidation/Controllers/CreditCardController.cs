@@ -2,8 +2,10 @@ using CreditCardValidation.Commands;
 using CreditCardValidation.Commands.SaveCreditCardCommand;
 using CreditCardValidation.Commands.ValidateTokenCommand;
 using CreditCardValidation.Domain.Contracts;
+using CreditCardValidation.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CreditCardValidation.Controllers;
 
@@ -21,16 +23,27 @@ public class CreditCardController : BaseController
     [HttpPost]
     [ProducesResponseType(typeof(CommandResponse<SaveCreditCardCommandResponse>), 200)]
     [ProducesResponseType(typeof(ErrorCommandResponse), 400)]
-    public async Task<IActionResult> Create([FromBody] SaveCreditCardCommandInput input)
+    public async Task<IActionResult> Create(
+        [FromBody] SaveCreditCardCommandInput input,
+        CancellationToken cancellationToken)
     {
-        return HandleResult(await _mediator.Send(input));
+        return HandleResponse(await _mediator.Send(input, cancellationToken));
+    }
+
+    [HttpGet("validate-token")]
+    [ProducesResponseType(typeof(CommandResponse<ValidateTokenCommandResponse>), 200)]
+    [ProducesResponseType(typeof(ErrorCommandResponse), 400)]
+    public async Task<IActionResult> ValidateToken(
+        [FromQuery] ValidateTokenCommandInput input,
+        CancellationToken cancellationToken)
+    {
+        return HandleResponse(await _mediator.Send(input, cancellationToken));
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(CommandResponse<ValidateTokenCommandResponse>), 200)]
-    [ProducesResponseType(typeof(ErrorCommandResponse), 400)]
-    public async Task<IActionResult> ValidateToken([FromQuery] ValidateTokenCommandInput input)
+    public async Task<IActionResult> Get(
+        [FromServices] CreditCardDbContext creditCardDbContext)
     {
-        return HandleResult(await _mediator.Send(input));
+        return Ok(await creditCardDbContext.CreditCards.ToListAsync());
     }
 }

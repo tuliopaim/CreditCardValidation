@@ -31,18 +31,23 @@ public class SaveCreditCardCommandHandler : IRequestHandler<SaveCreditCardComman
             return new();
         }
 
-        var registeredAt = _dateTimeProvider.UtcNow;
-        var creditCard = new CreditCard(request.CustomerId, request.CardNumber, registeredAt);
+        CreditCard? creditCard = await _creditCardRepository.GetByCardNumberToEdit(request.CardNumber);
 
-        _creditCardRepository.Add(creditCard);
+        if (creditCard is null)
+        {
+            creditCard = new CreditCard(request.CustomerId, request.CardNumber);
+
+            _creditCardRepository.Add(creditCard);
+        }
+
+        var token = creditCard.CreateToken(request.CVV, _dateTimeProvider.UtcNow);
+
         await _creditCardRepository.SaveChanges(cancellationToken);
-
-        var token = creditCard.CreateToken(request.CVV);
 
         return new SaveCreditCardCommandResponse
         {
             Token = token,
-            RegistrationDate = registeredAt,
+            RegistrationDate = creditCard.TokenCreatedAt,
             CardId = creditCard.CardId,
         };
     }

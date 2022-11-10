@@ -18,9 +18,14 @@ public class CreditCardRepository : ICreditCardRepository
         _creditCardDbContext.CreditCards.Add(creditCard);
     }
 
-    public Task<CreditCard?> Get(int id)
+    public Task<CreditCard?> GetToValidateToken(int id)
     {
-        return _creditCardDbContext.CreditCards.FirstOrDefaultAsync(x => x.CardId == id);
+        return _creditCardDbContext.CreditCards.AsNoTracking().FirstOrDefaultAsync(x => x.CardId == id);
+    }
+
+    public Task<CreditCard?> GetByCardNumberToEdit(long cardNumber)
+    {
+        return _creditCardDbContext.CreditCards.FirstOrDefaultAsync(x => x.Number == cardNumber);
     }
 
     public Task SaveChanges(CancellationToken cancellationToken = default)

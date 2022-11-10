@@ -21,7 +21,7 @@ public class ValidateTokenCommandHandler : IRequestHandler<ValidateTokenCommandI
 
     public async Task<ValidateTokenCommandResponse> Handle(ValidateTokenCommandInput request, CancellationToken cancellationToken)
     {
-        var card = await _creditCardRepository.Get(request.CardId);
+        var card = await _creditCardRepository.GetToValidateToken(request.CardId);
         if (card is null)
         {
             _notifier.Notify($"Credit Card not found!");
@@ -29,7 +29,7 @@ public class ValidateTokenCommandHandler : IRequestHandler<ValidateTokenCommandI
         }
 
         var utcNow = _dateTimeProvider.UtcNow;
-        if (utcNow - card.TokenRegisteredAt is { Minutes: > 30 })
+        if (utcNow - card.TokenCreatedAt is { Minutes: > 30 })
         {
             return new() { Validated = false };
         }
@@ -39,7 +39,7 @@ public class ValidateTokenCommandHandler : IRequestHandler<ValidateTokenCommandI
             return new() { Validated = false };
         }
 
-        var validToken = card.CreateToken(request.CVV);
+        var validToken = card.CreateToken(request.CVV, utcNow);
         if (validToken != request.Token)
         {
             return new() { Validated = false };
