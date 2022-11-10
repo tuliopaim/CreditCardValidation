@@ -20,7 +20,6 @@ public class CustomerRepository : ICustomerRepository
 
     public Task<bool> CustomerExists(int customerId)
     {
-        var customers = _creditCardDbContext.Customers.ToList();
         return _creditCardDbContext.Customers.AnyAsync(x => x.CustomerId == customerId);
     }
 
