@@ -1,5 +1,6 @@
 using CreditCardValidation.Commands;
 using CreditCardValidation.Commands.SaveCreditCardCommand;
+using CreditCardValidation.Commands.ValidateTokenCommand;
 using CreditCardValidation.Domain.Contracts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,14 @@ public class CreditCardController : BaseController
     [ProducesResponseType(typeof(CommandResponse<SaveCreditCardCommandResponse>), 200)]
     [ProducesResponseType(typeof(ErrorCommandResponse), 400)]
     public async Task<IActionResult> Create([FromBody] SaveCreditCardCommandInput input)
+    {
+        return HandleResult(await _mediator.Send(input));
+    }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(CommandResponse<ValidateTokenCommandResponse>), 200)]
+    [ProducesResponseType(typeof(ErrorCommandResponse), 400)]
+    public async Task<IActionResult> ValidateToken([FromQuery] ValidateTokenCommandInput input)
     {
         return HandleResult(await _mediator.Send(input));
     }

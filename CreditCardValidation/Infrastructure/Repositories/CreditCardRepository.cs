@@ -10,6 +10,11 @@ public class CreditCardRepository : ICreditCardRepository
         throw new NotImplementedException();
     }
 
+    public Task<CreditCard> Get(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task SaveChanges(CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
