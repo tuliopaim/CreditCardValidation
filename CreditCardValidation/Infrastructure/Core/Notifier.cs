@@ -1,4 +1,6 @@
-﻿namespace CreditCardValidation.Infrastructure.Notifier;
+﻿using CreditCardValidation.Domain.Contracts;
+
+namespace CreditCardValidation.Infrastructure.Core;
 
 public class Notifier : INotifier
 {

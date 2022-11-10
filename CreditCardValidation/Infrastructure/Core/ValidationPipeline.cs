@@ -1,9 +1,9 @@
-﻿using CreditCardValidation.Infrastructure.Notifier;
-using FluentValidation.Results;
+﻿using FluentValidation.Results;
 using FluentValidation;
 using MediatR;
+using CreditCardValidation.Domain.Contracts;
 
-namespace CreditCardValidation.Core;
+namespace CreditCardValidation.Infrastructure.Core;
 
 public class ValidationPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>

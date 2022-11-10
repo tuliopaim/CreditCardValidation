@@ -1,6 +1,6 @@
 using CreditCardValidation.Commands;
 using CreditCardValidation.Commands.SaveCreditCardCommand;
-using CreditCardValidation.Infrastructure.Notifier;
+using CreditCardValidation.Domain.Contracts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,5 +1,5 @@
 ﻿using CreditCardValidation.Commands;
-using CreditCardValidation.Infrastructure.Notifier;
+using CreditCardValidation.Domain.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CreditCardValidation.Controllers;
