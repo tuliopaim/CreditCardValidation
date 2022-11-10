@@ -18,11 +18,10 @@ public class CreditCardTests
     {
         var creditCard = new CreditCard(
             0,
-            cvv,
             creditCardNumber,
             DateTime.Now);
 
-        var token = creditCard.CreateToken();
+        var token = creditCard.CreateToken(cvv);
 
         Assert.Equal(expectedToken, token);
     }

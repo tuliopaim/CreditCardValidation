@@ -8,27 +8,24 @@ public class CreditCard
 
     public CreditCard(
         int customerId,
-        int cvv,
         long number,
         DateTime registredAt)
     {
         CustomerId = customerId;
-        CVV = cvv;
         Number = number;
-        RegistredAt = registredAt;
+        TokenRegisteredAt = registredAt;
     }
 
     public int CardId { get; private set; }
     public int CustomerId { get; private set; }
     public long Number { get; private set; }
-    public int CVV { get; private set; }
-    public DateTime RegistredAt { get; private set; }
+    public DateTime TokenRegisteredAt { get; private set; }
 
-    public long CreateToken()
+    public long CreateToken(int cvv)
     {
         int[] digits = LastFourDigitsOfNumber();
 
-        var iterationTimes = CVV % 4;
+        var iterationTimes = cvv % 4;
 
         for (int i = 0; i < iterationTimes; i++)
         {
