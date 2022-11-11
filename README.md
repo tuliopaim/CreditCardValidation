@@ -1,5 +1,20 @@
 # Credit Card Validation
 
+## Run 
+
+### Docker
+Open a terminal in the root of the repository.
+
+```` bash
+$ docker-compose up -d
+````
+
+Swagger on [http://localhost:5000/swagger](http://localhost:5000/swagger)
+
+## Solution
+
+![Structure of the Solution](https://github.com/tuliopaim/CreditCardValidation/blob/master/docs/structure_image.png)
+
 ## Core
 ----
 
