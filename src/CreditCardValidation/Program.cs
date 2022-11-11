@@ -50,3 +50,5 @@ app.MapControllers();
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.Run();
+
+public partial class Program { }

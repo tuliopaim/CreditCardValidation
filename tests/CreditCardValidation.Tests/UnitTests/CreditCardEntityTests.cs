@@ -1,8 +1,8 @@
 using CreditCardValidation.Domain.Entities;
 
-namespace CreditCardValidation.Tests;
+namespace CreditCardValidation.Tests.UnitTests;
 
-public class CreditCardTests
+public class CreditCardEntityTests
 {
     [Theory]
     [InlineData(001, 4607_3808_1998_0140, 0014)]

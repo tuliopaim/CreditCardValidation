@@ -1,10 +1,6 @@
 # Credit Card Validation
 
-## The solution 
-
-Divided in three projects:
-
-### Core
+## Core
 ----
 
 Useful things that can be used to standardize several microsservices in a productive environment.
@@ -14,19 +10,18 @@ Some design patterns used:
 
 - **INotifier** to gather errors across the scope of the request;
 - **ValidationPipeline** using MediatR and FluentValidator, to auto validate
-the inputs and short circuit in the case of errors; [See more]()
+the inputs and short circuit in the case of errors;
 - **ExceptionMiddleware** to log all the unhandled exceptions in the application.
 - **IDateTimeProvider** to facilitate mock;
 
-
-###  Api
+##  Api
 ----
 
 I opted to use the MediatR, that implements the mediator design pattern,
 helping to keep the responsibilities segregated, facilitate error handling and vertical scalability,
 and keep the controllers clean.
 
-#### Commands layer
+### Commands layer
 
 Each use case/command has his own folder inside `Commands/`, and it's composed with:
 
@@ -40,7 +35,7 @@ and the input will be validated with the InputValidator rules, short circuiting 
 
 See more about [MediatR](https://github.com/jbogard/MediatR) and [Validation Pipeline Behavior](https://imasters.com.br/back-end/fail-fast-validations-com-pipeline-behavior-no-mediatr-e-asp-net-core)
 
-#### Controllers layer
+### Controllers layer
 
 The controller's responsibilities is to pass the request input to the Mediator, and maps the result to a standard contract:
 
@@ -67,15 +62,21 @@ In case of success, HTTP 200:
 }
 ````
 
-#### Domain layer
+### Domain layer
 
-The entities encapsulating the business rules on how to generate the token, and the contracts (interfaces) for the repositories.
+- Entity encapsulating the business rule on how to generate the token
+- The contracts (interfaces) for the repositories.
 
 
-#### Infrastructure layer
+### Infrastructure layer
 
-DbContext configuration and the repositories implementations.
+- DbContext (in-memory) configuration  
+- Repositories implementations.
 
-### Tests
+## Tests
 ----
 Unit and Integrations tests.
+
+- xUnit
+- Moq 
+- Microsoft.AspNetCore.Mvc.Testing (WebApplicationFactory)
