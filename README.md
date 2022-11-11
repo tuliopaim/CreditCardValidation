@@ -13,35 +13,37 @@ Swagger on [http://localhost:5000/swagger](http://localhost:5000/swagger)
 
 ## Solution
 
+### Structure
+
 ![Structure of the Solution](https://github.com/tuliopaim/CreditCardValidation/blob/master/docs/structure_image.png)
 
-## Core
+## Core Project
 ----
 
 Useful things that can be used to standardize several microsservices in a productive environment.
 Can be deployed and distributed as a Nuget package, for example.
 
-Some design patterns used: 
+Some patterns used: 
 
-- **INotifier** to gather errors across the scope of the request;
-- **ValidationPipeline** using MediatR and FluentValidator, to auto validate
+- **INotifier** - to gather errors across the scope of the request;
+- **ValidationPipeline** - using MediatR and FluentValidator, to auto validate
 the inputs and short circuit in the case of errors;
-- **ExceptionMiddleware** to log all the unhandled exceptions in the application.
-- **IDateTimeProvider** to facilitate mock;
+- **ExceptionMiddleware** - to log all the unhandled exceptions in the application.
+- **IDateTimeProvider** - to facilitate mock;
 
-##  Api
+##  Api Project
 ----
 
-I opted to use the MediatR, that implements the mediator design pattern,
-helping to keep the responsibilities segregated, facilitate error handling and vertical scalability,
-and keep the controllers clean.
+I opted to use the mediator design pattern with the MediatR nuget, that helps to keep the
+responsibilities segregated, facilitate error handling and vertical scalability,
+besides leaving the controllers clean.
 
 ### Commands layer
 
 Each use case/command has his own folder inside `Commands/`, and it's composed with:
 
 - Input - the input dto, implements `IRequest<TResponse>`
-- InputValidator - will be used to validate the input in the ValidationPipeline
+- InputValidator - will be used to validate the input in the ValidationPipeline, inherit from `AbstractValidator<TRequest>`
 - Response - the output dto
 - Handler - the logic of the command, implements `IRequestHandler<TRequest, TResponse>`
 
@@ -79,16 +81,16 @@ In case of success, HTTP 200:
 
 ### Domain layer
 
-- Entity encapsulating the business rule on how to generate the token
+- Entity encapsulating the business rule on how to generate the token.
 - The contracts (interfaces) for the repositories.
 
 
 ### Infrastructure layer
 
-- DbContext (in-memory) configuration  
+- DbContext (in-memory) configuration.
 - Repositories implementations.
 
-## Tests
+## Tests Project
 ----
 Unit and Integrations tests.
 

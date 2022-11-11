@@ -2,10 +2,8 @@ using CreditCardValidation.Commands;
 using CreditCardValidation.Commands.SaveCreditCardCommand;
 using CreditCardValidation.Commands.ValidateTokenCommand;
 using CreditCardValidation.Core.Contracts;
-using CreditCardValidation.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace CreditCardValidation.Controllers;
 
@@ -38,12 +36,5 @@ public class CreditCardController : BaseController
         CancellationToken cancellationToken)
     {
         return HandleResponse(await _mediator.Send(input, cancellationToken));
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> Get(
-        [FromServices] CreditCardDbContext creditCardDbContext)
-    {
-        return Ok(await creditCardDbContext.CreditCards.ToListAsync());
     }
 }
