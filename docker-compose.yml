@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  credit-card-validator.api:
+    container_name: credit-card-validator
+    image: credit-card-validator
+    build:
+      context: .
+      dockerfile: ./src/CreditCardValidation/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000     
+    ports:
+      - 5000:5000
